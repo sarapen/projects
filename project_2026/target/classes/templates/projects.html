@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Projects</title>
+</head>
+<body>
+
+<h2>Create Project</h2>
+
+<form th:action="@{/projects}" method="post">
+    Name:
+    <input type="text" name="name"/>
+    <br>
+
+    Description:
+    <input type="text" name="description"/>
+    <br>
+
+    <button type="submit">Create</button>
+</form>
+
+<hr>
+
+<h2>Projects</h2>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Action</th>
+    </tr>
+
+    <tr th:each="p : ${projects}">
+        <td th:text="${p.name}"></td>
+        <td th:text="${p.description}"></td>
+        <td>
+            <a th:href="@{/projects/delete/{id}(id=${p.id})}">Delete</a>
+        </td>
+    </tr>
+
+</table>
+
+</body>
+</html>
