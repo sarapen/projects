@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Project 2026</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<!-- reusable navbar -->
+<div th:replace="~{fragments/bar :: navbar}"></div>
+
+<div class="dashboard-container">
+
+    <div class="welcome-card">
+
+        <h1>
+            Welcome,
+        </h1>
+
+        <p>You are successfully logged into Project 2026.</p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
