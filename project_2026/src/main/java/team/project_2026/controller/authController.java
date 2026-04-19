@@ -9,14 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import team.project_2026.model.User;
-import team.project_2026.repository.userRepo;
-import team.project_2026.service.userService;
+import team.project_2026.service.UserService;
 
 @Controller
 public class authController {
 
     @Autowired
-    private userService userService;
+    private UserService userService;
 
     @RequestMapping("/login")
     public String login(){

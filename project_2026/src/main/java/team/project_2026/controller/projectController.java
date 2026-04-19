@@ -1,0 +1,54 @@
+package team.project_2026.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import team.project_2026.model.Project;
+import team.project_2026.model.UseCase;
+import team.project_2026.service.ProjectService;
+import team.project_2026.service.UseCaseService;
+import team.project_2026.service.UserService;
+import java.util.List;
+import java.security.Principal;
+
+@Controller
+public class projectController {
+
+    @Autowired
+    private ProjectService projectService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UseCaseService useCaseService;
+
+
+    @PostMapping("/projects/create")
+    public String createProject(@ModelAttribute Project project, Principal principal) {
+        projectService.createProject(project, userService.findByUsername(principal.getName()));
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping("/projects/delete/{id}")
+    public String deleteProject(@PathVariable int id) {
+        projectService.deleteById(id);
+        return "redirect:/dashboard";
+    }
+
+    @GetMapping("/projects/edit/{projectId}")
+    public String editProject(@PathVariable int projectId, Model model) {
+        List<UseCase> useCases = useCaseService.getUseCaseByProjectId(projectId);
+        model.addAttribute("useCases",useCases);
+
+        Project project = projectService.getById(projectId);
+        model.addAttribute("project", project);
+        return "/project/project";
+    }
+
+
+}

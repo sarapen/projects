@@ -1,0 +1,46 @@
+<div th:if="${useCases == null or #lists.isEmpty(useCases)}">
+    <p>No use cases yet...</p>
+</div>
+
+<div th:if="${useCases != null and !#lists.isEmpty(useCases)}">
+
+    <div th:each="uc : ${useCases}" class="usecase-card">
+
+        <h3 th:text="${uc.name}">Use Case Name</h3>
+
+        <p><strong>Actors:</strong> <span th:text="${uc.actors}"></span></p>
+        <p><strong>Preconditions:</strong> <span th:text="${uc.preconditions}"></span></p>
+        <p><strong>Main Flow:</strong> <span th:text="${uc.mainFlow}"></span></p>
+        <p><strong>Postconditions:</strong> <span th:text="${uc.postconditions}"></span></p>
+
+        <!-- ACTION BUTTONS -->
+        <div class="usecase-actions">
+
+            <!-- EDIT -->
+            <a th:href="@{'/usecases/edit/' + ${uc.id}}">
+                <button type="button">Edit</button>
+            </a>
+
+            <!-- DELETE (POST form for safety) -->
+            <form th:action="@{'/usecases/delete/' + ${uc.id}}"
+                  method="post"
+                  style="display:inline;">
+
+                <button type="submit"
+                        onclick="return confirm('Delete this use case?')">
+                    Delete
+                </button>
+
+                <!-- CSRF -->
+                <input type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}" />
+            </form>
+
+        </div>
+
+        <hr>
+
+    </div>
+
+</div>
