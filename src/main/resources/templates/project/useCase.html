@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Use Case</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/bar :: navbar}"></div>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <h1>Create Use Case</h1>
+
+    <hr>
+
+    <!-- FORM -->
+    <form th:action="@{'/projects/' + ${projectId} + '/usecase/create'}"
+          method="post">
+
+        <!-- USE CASE NAME -->
+        <label>Use Case Name</label>
+        <input type="text" name="name" required>
+        <br><br>
+
+        <!-- ACTORS -->
+        <label>Actors</label>
+        <textarea name="actors" rows="3" placeholder="e.g. User, Admin" required></textarea>
+        <br><br>
+
+        <!-- PRECONDITIONS -->
+        <label>Preconditions</label>
+        <textarea name="preconditions" rows="3" required></textarea>
+        <br><br>
+
+        <!-- MAIN FLOW -->
+        <label>Main Flow</label>
+        <textarea name="mainFlow" rows="6" required></textarea>
+        <br><br>
+
+        <!-- POSTCONDITIONS -->
+        <label>Postconditions</label>
+        <textarea name="postconditions" rows="3" required></textarea>
+        <br><br>
+
+        <!-- SUBMIT -->
+        <button type="submit">
+             Create Use Case
+        </button>
+
+        <!-- CSRF -->
+        <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}" />
+
+    </form>
+
+</div>
+
+</body>
+</html>
