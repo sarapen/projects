@@ -36,5 +36,12 @@ public class useCaseController {
         return "redirect:/dashboard";
     }
 
+    @PostMapping("/project/{projectId}/usecases/delete/{useCaseId}")
+    public String deleteUseCase(@PathVariable int useCaseId, @PathVariable int projectId) {
+        useCaseService.deleteById(useCaseId);
+        System.out.println("delete");
+        return "redirect:/projects/edit/" + projectId;
+    }
+
 }
 

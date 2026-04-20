@@ -29,4 +29,8 @@ public class UseCaseService {
     public List<UseCase> getUseCaseByProjectId(Integer projectId){
         return useCaseRepo.findUseCaseByProjectId(projectId);
     }
+
+    public void deleteById(Integer useCaseId){
+        useCaseRepo.deleteById(useCaseId);
+    }
 }

@@ -2,6 +2,8 @@ package team.project_2026.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Project {
     @Id
@@ -11,6 +13,9 @@ public class Project {
 
     @Column(name="name", unique=true)
     private String name;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UseCase> useCases;
 
     @ManyToOne
     @JoinColumn(name = "userId")
@@ -31,6 +36,8 @@ public class Project {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setUseCases(List<UseCase> useCases){this.useCases = useCases;}
 
     public User getUserId() {
         return user;

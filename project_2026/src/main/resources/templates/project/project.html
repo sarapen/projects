@@ -1,46 +1,98 @@
-<div th:if="${useCases == null or #lists.isEmpty(useCases)}">
-    <p>No use cases yet...</p>
-</div>
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
-<div th:if="${useCases != null and !#lists.isEmpty(useCases)}">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Use Cases</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <div th:each="uc : ${useCases}" class="usecase-card">
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
 
-        <h3 th:text="${uc.name}">Use Case Name</h3>
+<body>
 
-        <p><strong>Actors:</strong> <span th:text="${uc.actors}"></span></p>
-        <p><strong>Preconditions:</strong> <span th:text="${uc.preconditions}"></span></p>
-        <p><strong>Main Flow:</strong> <span th:text="${uc.mainFlow}"></span></p>
-        <p><strong>Postconditions:</strong> <span th:text="${uc.postconditions}"></span></p>
+<!-- NAVBAR -->
+<div th:replace="~{fragments/bar :: navbar}"></div>
 
-        <!-- ACTION BUTTONS -->
-        <div class="usecase-actions">
+<div class="container">
 
-            <!-- EDIT -->
-            <a th:href="@{'/usecases/edit/' + ${uc.id}}">
-                <button type="button">Edit</button>
-            </a>
+    <!-- PROJECT TITLE -->
+    <h1 th:text="${project.name}">Project Name</h1>
 
-            <!-- DELETE (POST form for safety) -->
-            <form th:action="@{'/usecases/delete/' + ${uc.id}}"
-                  method="post"
-                  style="display:inline;">
+    <hr>
 
-                <button type="submit"
-                        onclick="return confirm('Delete this use case?')">
-                    Delete
-                </button>
+    <!-- ADD USE CASE BUTTON (ALWAYS VISIBLE) -->
+    <div style="margin-bottom: 20px;">
+        <a th:href="@{'/projects/' + ${project.id} + '/usecase/create'}">
+            <button type="button">+ Add Use Case</button>
+        </a>
+    </div>
 
-                <!-- CSRF -->
-                <input type="hidden"
-                       th:name="${_csrf.parameterName}"
-                       th:value="${_csrf.token}" />
-            </form>
+    <!-- EMPTY STATE -->
+    <div th:if="${useCases == null or #lists.isEmpty(useCases)}">
+        <p>No use cases yet... </p>
+    </div>
+
+    <!-- USE CASE LIST -->
+    <div th:if="${useCases != null and !#lists.isEmpty(useCases)}">
+
+        <div th:each="uc : ${useCases}" class="usecase-card">
+
+            <!-- TITLE -->
+            <h3 th:text="${uc.name}">Use Case Name</h3>
+
+            <!-- CONTENT -->
+            <p><strong>Actors:</strong>
+                <span th:text="${uc.actors}"></span>
+            </p>
+
+            <p><strong>Preconditions:</strong>
+                <span th:text="${uc.preconditions}"></span>
+            </p>
+
+            <p><strong>Main Flow:</strong>
+                <span th:text="${uc.mainFlow}"></span>
+            </p>
+
+            <p><strong>Postconditions:</strong>
+                <span th:text="${uc.postconditions}"></span>
+            </p>
+
+            <!-- ACTION BUTTONS -->
+            <div class="usecase-actions">
+
+                <!-- EDIT -->
+                <a th:href="@{'/usecases/edit/' + ${uc.id}}">
+                    <button type="button">Edit</button>
+                </a>
+
+                <!-- DELETE -->
+                <form th:action="@{'/project/' + ${project.id} + '/usecases/delete/' + ${uc.id}}"
+                      method="post"
+                      style="display:inline;">
+
+                    <button type="submit"
+                            onclick="return confirm('Delete this use case?')">
+                        Delete
+                    </button>
+
+                    <!-- CSRF -->
+                    <input type="hidden"
+                           th:name="${_csrf.parameterName}"
+                           th:value="${_csrf.token}" />
+                </form>
+
+            </div>
+
+            <hr>
 
         </div>
-
-        <hr>
 
     </div>
 
 </div>
+
+</body>
+</html>
