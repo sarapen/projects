@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import team.project_2026.model.User;
 import team.project_2026.service.ProjectService;
 import team.project_2026.service.UserService;
@@ -29,5 +31,22 @@ public class userController {
         model.addAttribute("projects", projectService.getProjectsByUser(user));
 
         return "auth/dashboard";
+    }
+
+
+    @GetMapping("/profile")
+    public String profile(Model model, Principal principal) {
+        System.out.println("PROFILE HIT");
+        User user =  userService.findByUsername(principal.getName());
+        model.addAttribute("user", user);
+        return "user/profile";
+    }
+
+    @PostMapping("/profile/update")
+    public String updateProfile(@ModelAttribute("user") User user, Principal principal) {
+        String currentUsername = principal.getName();
+        userService.updateUser(user, currentUsername);
+
+        return "redirect:/profile?success";
     }
 }

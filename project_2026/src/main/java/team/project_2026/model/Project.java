@@ -17,6 +17,10 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UseCase> useCases;
 
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CRC> crcs;
+
+
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;

@@ -2,6 +2,8 @@ package team.project_2026.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class UseCase {
     @Id
@@ -27,6 +29,14 @@ public class UseCase {
 
     @Column(name="postconditions")
     private String postconditions;
+
+    @ManyToMany
+    @JoinTable(
+            name = "usecase_crc",
+            joinColumns = @JoinColumn(name = "usecase_id"),
+            inverseJoinColumns = @JoinColumn(name = "crc_id")
+    )
+    private List<CRC> crcCards;
 
     public int getId() {
         return id;
@@ -74,4 +84,6 @@ public class UseCase {
         this.postconditions = postconditions;
     }
 
+    public List<CRC> getCrcCards() {return crcCards;}
+    public void setCrcCards(List<CRC> crcCards) {this.crcCards = crcCards;}
 }

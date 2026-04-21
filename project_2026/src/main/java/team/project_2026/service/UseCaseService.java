@@ -33,4 +33,8 @@ public class UseCaseService {
     public void deleteById(Integer useCaseId){
         useCaseRepo.deleteById(useCaseId);
     }
+
+    public UseCase findById(Integer useCaseId){
+        return useCaseRepo.findById(useCaseId);
+    }
 }

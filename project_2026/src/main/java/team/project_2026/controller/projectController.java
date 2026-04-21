@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import team.project_2026.model.Project;
 import team.project_2026.model.UseCase;
+import team.project_2026.model.CRC;
 import team.project_2026.service.ProjectService;
 import team.project_2026.service.UseCaseService;
 import team.project_2026.service.UserService;
+import team.project_2026.service.CrcService;
 import java.util.List;
 import java.security.Principal;
 
@@ -26,6 +28,9 @@ public class projectController {
 
     @Autowired
     private UseCaseService useCaseService;
+
+    @Autowired
+    private CrcService crcService;
 
 
     @PostMapping("/projects/create")
@@ -43,6 +48,8 @@ public class projectController {
     @GetMapping("/projects/edit/{projectId}")
     public String editProject(@PathVariable int projectId, Model model) {
         List<UseCase> useCases = useCaseService.getUseCaseByProjectId(projectId);
+        List<CRC> crcCards = crcService.getCrcByProjectId(projectId);
+        model.addAttribute("crcCards",crcCards);
         model.addAttribute("useCases",useCases);
 
         Project project = projectService.getById(projectId);

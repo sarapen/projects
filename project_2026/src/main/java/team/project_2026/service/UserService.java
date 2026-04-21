@@ -39,5 +39,17 @@ public class UserService {
     }
 
 
+    public void updateUser(User updatedUser, String currentUsername){
+        User existingUser = userRepo.findByUsername(currentUsername)
+                .orElseThrow(() ->
+                                new RuntimeException("User not found: " + currentUsername));
+
+        existingUser.setUsername(updatedUser.getUsername());
+        existingUser.setEmail(updatedUser.getEmail());
+        String encoded = bCryptPasswordEncoder.encode(updatedUser.getPassword());
+        existingUser.setPassword(encoded);
+        userRepo.save(existingUser);
+
+    }
 
 }
