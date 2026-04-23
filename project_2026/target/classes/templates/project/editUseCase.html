@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Create Use Case</title>
+    <title>Edit Use Case</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
@@ -14,43 +14,43 @@
 
 <div class="container">
 
-    <!-- HEADER -->
-    <h1>Create Use Case</h1>
+    <h1>Edit Use Case</h1>
 
     <hr>
 
     <!-- FORM -->
-    <form th:action="@{'/projects/' + ${projectId} + '/usecase/create'}"
+    <form th:action="@{'/projects/' + ${projectId} + '/usecases/edit/' + ${useCase.id}}"
+          th:object="${useCase}"
           method="post">
 
-        <!-- USE CASE NAME -->
+        <!-- NAME -->
         <label>Use Case Name</label>
-        <input type="text" name="name" required>
+        <input type="text" th:field="*{name}" required>
         <br><br>
 
         <!-- ACTORS -->
         <label>Actors</label>
-        <textarea name="actors" rows="3" placeholder="e.g. User, Admin" required></textarea>
+        <textarea th:field="*{actors}" rows="3" required></textarea>
         <br><br>
 
         <!-- PRECONDITIONS -->
         <label>Preconditions</label>
-        <textarea name="preconditions" rows="3" required></textarea>
+        <textarea th:field="*{preconditions}" rows="3" required></textarea>
         <br><br>
 
         <!-- MAIN FLOW -->
         <label>Main Flow</label>
-        <textarea name="mainFlow" rows="6" required></textarea>
+        <textarea th:field="*{mainFlow}" rows="6" required></textarea>
         <br><br>
 
         <!-- POSTCONDITIONS -->
         <label>Postconditions</label>
-        <textarea name="postconditions" rows="3" required></textarea>
+        <textarea th:field="*{postconditions}" rows="3" required></textarea>
         <br><br>
 
-        <!-- SUBMIT -->
+        <!-- UPDATE BUTTON -->
         <button type="submit">
-             Create Use Case
+            Update Use Case
         </button>
 
         <!-- CSRF -->

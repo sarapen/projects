@@ -1,10 +1,12 @@
 team\project_2026\service\CustomUserDetailsService.class
 team\project_2026\Project2026Application.class
 team\project_2026\controller\useCaseController.class
+team\project_2026\model\CRC.class
 team\project_2026\controller\userController.class
 team\project_2026\service\UseCaseService.class
 team\project_2026\controller\authController.class
 team\project_2026\model\Project.class
+team\project_2026\controller\crcController.class
 team\project_2026\config\SecurityConfig.class
 team\project_2026\repository\projectRepo.class
 team\project_2026\service\UserService.class
@@ -13,4 +15,6 @@ team\project_2026\service\ProjectService.class
 team\project_2026\controller\projectController.class
 team\project_2026\model\UseCase.class
 team\project_2026\model\User.class
+team\project_2026\repository\crcRepo.class
 team\project_2026\repository\useCaseRepo.class
+team\project_2026\service\CrcService.class
