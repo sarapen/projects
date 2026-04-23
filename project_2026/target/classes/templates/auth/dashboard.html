@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Project 2026</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/bar :: navbar}"></div>
+
+<div class="dashboard-container">
+
+    <div class="welcome-card">
+
+        <h1>
+            Welcome,
+            <span sec:authentication="principal.username"></span>
+        </h1>
+
+
+        <h2>Add New Project</h2>
+
+        <form th:action="@{/projects/create}" method="post" class="project-form">
+
+            <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter project name..."
+                    required
+            >
+
+            <button type="submit" class="add-project-btn">
+                + Add Project
+            </button>
+
+            <!-- CSRF -->
+            <input type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}" />
+        </form>
+
+        <h2>My Projects</h2>
+
+        <!-- EMPTY STATE -->
+        <p th:if="${#lists.isEmpty(projects)}">
+            No projects yet...
+        </p>
+
+        <!-- PROJECT LIST -->
+        <div th:if="${!#lists.isEmpty(projects)}">
+
+            <table class="project-table">
+                <tr>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+
+                <tr th:each="project : ${projects}">
+                    <td th:text="${project.name}"></td>
+
+                    <td>
+
+                        <!-- EDIT -->
+                        <a th:href="@{'/projects/edit/' + ${project.id}}">
+                            <button type="button">Edit</button>
+                        </a>
+
+                        <!-- DELETE -->
+                        <a th:href="@{'/projects/delete/' + ${project.id}}"
+                           onclick="return confirm('Delete this project?')">
+                            <button type="button">Delete</button>
+                        </a>
+
+                    </td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
