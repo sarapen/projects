@@ -37,4 +37,14 @@ public class UseCaseService {
     public UseCase findById(Integer useCaseId){
         return useCaseRepo.findById(useCaseId);
     }
+
+    public void updateUser(Integer useCaseId, UseCase updatedUseCase){
+        UseCase existingUseCase = useCaseRepo.findById(useCaseId);
+        existingUseCase.setName(updatedUseCase.getName());
+        existingUseCase.setActors(updatedUseCase.getActors());
+        existingUseCase.setPreconditions(updatedUseCase.getPreconditions());
+        existingUseCase.setMainFlow(updatedUseCase.getMainFlow());
+        existingUseCase.setPostconditions(updatedUseCase.getPostconditions());
+        useCaseRepo.save(existingUseCase);
+    }
 }

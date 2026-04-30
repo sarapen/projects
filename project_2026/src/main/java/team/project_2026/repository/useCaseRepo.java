@@ -12,4 +12,5 @@ public interface useCaseRepo extends JpaRepository<UseCase, Long> {
     public List<UseCase> findUseCaseByProjectId(Integer projectId);
     public void deleteById(Integer useCaseId);
     public UseCase findById(Integer useCaseId);
+    public List<UseCase> findByProjectId(Integer projectId);
 }

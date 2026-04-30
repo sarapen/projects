@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import team.project_2026.model.CRC;
 import team.project_2026.model.Project;
 import team.project_2026.model.UseCase;
 import team.project_2026.service.ProjectService;
@@ -14,6 +15,7 @@ import team.project_2026.service.UseCaseService;
 import team.project_2026.service.UserService;
 
 import java.security.Principal;
+import java.util.List;
 
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
@@ -53,10 +55,21 @@ public class useCaseController {
     }
 
     @PostMapping("/projects/{projectId}/usecases/edit/{useCaseId}")
-    public String updateCasePage(@PathVariable int useCaseId, @PathVariable int projectId) {
-        //update attributes to be done
+    public String updateCasePage(@PathVariable int useCaseId, @PathVariable int projectId, @ModelAttribute UseCase updatedUseCase) {
+        useCaseService.updateUser(useCaseId, updatedUseCase);
         return "redirect:/projects/edit/" + projectId;
     }
 
+
+    @GetMapping("/projects/{projectId}/usecases/{useCaseId}/links")
+    public String showUseCasesLinks(@PathVariable int useCaseId, @PathVariable int projectId, Model model) {
+
+        UseCase useCase = useCaseService.findById(useCaseId);
+        List<CRC> crcCards = useCase.getCrcCards(); //merge to one service call
+
+        model.addAttribute("useCase", useCase);
+        model.addAttribute("crcCards", crcCards);
+        return "project/useCaseLinks";
+    }
 }
 

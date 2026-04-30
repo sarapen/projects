@@ -90,6 +90,10 @@
                         <button>Edit</button>
                     </a>
 
+                    <a th:href="@{'/projects/' + ${project.id} + '/usecases/' + ${uc.id} + '/links'}">
+                        <button>View Linked CRC Cards</button>
+                    </a>
+
                     <form th:action="@{'/project/' + ${project.id} + '/usecases/delete/' + ${uc.id}}"
                           method="post"
                           style="display:inline;">
@@ -140,8 +144,12 @@
 
                 <div class="card-actions">
 
-                    <a th:href="@{'/crc/edit/' + ${crc.id}}">
+                    <a th:href="@{'/projects/' + ${project.id} + '/crc/edit/' + ${crc.id}}">
                         <button>Edit</button>
+                    </a>
+
+                    <a th:href="@{'/projects/' + ${project.id} + '/crc/' + ${crc.id} + '/links'}">
+                        <button>View Linked Use Cases</button>
                     </a>
 
                     <form th:action="@{'/projects/' + ${project.id} + '/crc/delete/' + ${crc.id}}"

@@ -30,12 +30,7 @@ public class UseCase {
     @Column(name="postconditions")
     private String postconditions;
 
-    @ManyToMany
-    @JoinTable(
-            name = "usecase_crc",
-            joinColumns = @JoinColumn(name = "usecase_id"),
-            inverseJoinColumns = @JoinColumn(name = "crc_id")
-    )
+    @ManyToMany(mappedBy = "useCases")
     private List<CRC> crcCards;
 
     public int getId() {
@@ -86,4 +81,11 @@ public class UseCase {
 
     public List<CRC> getCrcCards() {return crcCards;}
     public void setCrcCards(List<CRC> crcCards) {this.crcCards = crcCards;}
+
+    public void addCrc(CRC crc) {
+        if (!this.crcCards.contains(crc)) {
+            this.crcCards.add(crc);
+            crc.getUseCases().add(this);
+        }
+    }
 }

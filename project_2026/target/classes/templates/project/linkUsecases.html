@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Use Cases</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .usecase {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f4f4f4;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 6px;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <h2>Available Use Cases</h2>
+
+    <div th:each="useCase : ${availableUseCases}" class="usecase">
+
+        <!-- Use case name -->
+        <span th:text="${useCase.name}">Use Case Name</span>
+
+        <!-- POST form -->
+        <form method="post"
+              th:action="@{'/projects/' + ${projectId} + '/crc/' + ${crcId} + '/useCase/' + ${useCase.id} + '/link'}">
+
+            <button type="submit" class="btn">Link</button>
+
+        </form>
+
+    </div>
+
+</div>
+</body>
+</html>

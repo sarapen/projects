@@ -69,26 +69,27 @@
 
 <body>
 
+<div th:replace="~{fragments/bar :: navbar}"></div>
+
 <div class="container">
 
     <h1>Create CRC Card</h1>
 
     <form th:action="@{'/projects/' + ${projectId} + '/crc/create'}"
+          th:object="${crc}"
           method="post">
 
         <!-- USE CASE NAME -->
-        <label>CRC Name</label>
-        <input type="text" name="name" required>
+        <label>Class Name</label>
+        <input type="text" th:field="*{className}" required>
         <br><br>
 
-        <!-- Responsibilities -->
         <label>Responsibilities</label>
-        <textarea name="responsibilities" rows="3" required></textarea>
+        <textarea th:field="*{responsibilities}" rows="3" required></textarea>
         <br><br>
 
-        <!-- Collaborations -->
         <label>Collaborations</label>
-        <textarea name="collaborations" rows="3" required></textarea>
+        <textarea th:field="*{collaborations}" rows="3" required></textarea>
         <br><br>
 
 

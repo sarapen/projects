@@ -2,7 +2,9 @@ package team.project_2026.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -25,7 +27,12 @@ public class CRC {
     @Column(name="collaborations")
     private String collaborations;
 
-    @ManyToMany(mappedBy = "crcCards")
+    @ManyToMany
+    @JoinTable(
+            name = "usecase_crc",
+            joinColumns = @JoinColumn(name = "crc_id"),
+            inverseJoinColumns = @JoinColumn(name = "usecase_id")
+    )
     private List<UseCase> useCases;
 
     public int getId() {
@@ -42,7 +49,6 @@ public class CRC {
         this.project = project;
     }
 
-    // Getter and Setter for names
     public String getClassName() {
         return className;
     }
@@ -66,6 +72,13 @@ public class CRC {
 
     public List<UseCase> getUseCases() {return useCases;}
     public void setUseCases(List<UseCase> useCases) {this.useCases = useCases;}
+
+    public void addUseCase(UseCase useCase) {
+        if (!this.useCases.contains(useCase)) {
+            this.useCases.add(useCase);
+            useCase.getCrcCards().add(this);
+        }
+    }
 
 }
 

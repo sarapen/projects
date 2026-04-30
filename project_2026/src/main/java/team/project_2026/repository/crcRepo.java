@@ -9,6 +9,7 @@ import java.util.List;
 public interface crcRepo extends JpaRepository<CRC, Long> {
     public List<CRC> getCrcByProjectId(Integer projectId);
     public void deleteById(Integer crcId);
+    public CRC findById(Integer crcId);
 }
 
 
