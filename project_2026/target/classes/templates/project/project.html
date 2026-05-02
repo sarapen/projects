@@ -59,6 +59,12 @@
     <h1 th:text="${project.name}">Project Name</h1>
     <hr>
 
+    <a th:href="@{'/projects/' + ${project.id} + '/diagrams'}">
+        <button type="button">Generate UML Diagrams</button>
+    </a>
+
+    <hr>
+
     <div class="split-container">
 
         <!-- ================= LEFT SIDE: USE CASES ================= -->

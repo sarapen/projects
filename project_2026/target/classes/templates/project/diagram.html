@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Diagram Generation</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div th:replace="~{fragments/bar :: navbar}"></div>
+
+<div class="container">
+
+    <h1>Diagram Generation</h1>
+
+    <a th:href="@{'/projects/edit/' + ${projectId}}">
+        <button type="button">Back to Project</button>
+    </a>
+
+    <hr>
+
+    <h2>Use Case Diagram</h2>
+
+    <form th:action="@{'/projects/' + ${projectId} + '/diagrams/usecase'}" method="post">
+        <label>Tool:</label>
+
+        <select name="tool">
+            <option value="PLANTUML">PlantUML</option>
+            <option value="NOMNOML">Nomnoml</option>
+        </select>
+
+        <button type="submit">Generate Use Case Diagram Script</button>
+
+        <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}" />
+    </form>
+
+    <hr>
+
+    <h2>Class Diagram</h2>
+
+    <form th:action="@{'/projects/' + ${projectId} + '/diagrams/class'}" method="post">
+        <label>Tool:</label>
+
+        <select name="tool">
+            <option value="PLANTUML">PlantUML</option>
+            <option value="NOMNOML">Nomnoml</option>
+        </select>
+
+        <button type="submit">Generate Class Diagram Script</button>
+
+        <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}" />
+    </form>
+
+    <div th:if="${script != null}">
+        <hr>
+
+        <h2 th:text="${diagramKind + ' - ' + tool}">Generated Script</h2>
+
+        <textarea rows="20"
+                  style="width:100%; font-family:monospace;"
+                  th:text="${script}">
+        </textarea>
+    </div>
+
+</div>
+
+</body>
+</html>
