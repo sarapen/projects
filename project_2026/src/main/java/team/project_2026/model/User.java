@@ -1,9 +1,6 @@
 package team.project_2026.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,6 +27,10 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Project> projects = new ArrayList<>();
+
+
+    @ManyToMany(mappedBy = "collaborators")
+    private Set<Project> collabProjects = new HashSet<>();
 
 
     public String getUsername() {
@@ -61,5 +62,32 @@ public class User {
         this.password = password;
     }
 
+
+    public Set<Project> getCollabProjects() {
+        return collabProjects;
+    }
+
+    public void setCollabProjects(Set<Project> collabProjects) {
+        this.collabProjects = collabProjects;
+    }
+
+    public void addCollabProjects(Project collabProjects) {
+        projects.add(collabProjects);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+
+        User user = (User) o;
+
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(id);
+    }
 
 }

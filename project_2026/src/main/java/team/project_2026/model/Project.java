@@ -2,7 +2,10 @@ package team.project_2026.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Project {
@@ -20,10 +23,17 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CRC> crcs;
 
-
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
+
+    @ManyToMany
+    @JoinTable(
+            name = "project_users",
+            joinColumns = @JoinColumn(name = "project_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> collaborators = new HashSet<>();
 
     public int getId() {
         return id;
@@ -49,5 +59,17 @@ public class Project {
 
     public void setUserId(User user) {
         this.user = user;
+    }
+
+    public Set<User> getCollaborators() {
+        return collaborators;
+    }
+
+    public void setCollaborators(Set<User> collaborators) {
+        this.collaborators = collaborators;
+    }
+
+    public void addCollaborator(User user) {
+        collaborators.add(user);
     }
 }

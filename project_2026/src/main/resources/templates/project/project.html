@@ -56,7 +56,23 @@
 
 <div class="container">
 
-    <h1 th:text="${project.name}">Project Name</h1>
+    <div style="display:flex; align-items:center; gap:12px;">
+        <h1 style="margin:0;" th:text="${project.name}">Project Name</h1>
+        <a th:href="@{'/projects/' + ${project.id} + '/addContributor'}">
+            <button type="button"
+                    style="
+                    background-color:#28a745;
+                    color:white;
+                    border:none;
+                    padding:8px 12px;
+                    border-radius:6px;
+                    cursor:pointer;
+                    font-weight:500;
+                ">
+                Share Project
+            </button>
+        </a>
+    </div>
     <hr>
 
     <a th:href="@{'/projects/' + ${project.id} + '/diagrams'}">
@@ -90,6 +106,7 @@
                 <p><strong>Preconditions:</strong> <span th:text="${uc.preconditions}"></span></p>
                 <p><strong>Main Flow:</strong> <span th:text="${uc.mainFlow}"></span></p>
                 <p><strong>Postconditions:</strong> <span th:text="${uc.postconditions}"></span></p>
+
 
                 <div class="card-actions">
                     <a th:href="@{'/project/' + ${project.id} + '/usecases/edit/' + ${uc.id}}">

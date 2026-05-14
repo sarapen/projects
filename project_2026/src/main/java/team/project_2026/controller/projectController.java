@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import team.project_2026.model.Project;
 import team.project_2026.model.UseCase;
 import team.project_2026.model.CRC;
+import team.project_2026.model.User;
 import team.project_2026.service.ProjectService;
 import team.project_2026.service.UseCaseService;
 import team.project_2026.service.UserService;
@@ -57,5 +58,13 @@ public class projectController {
         return "/project/project";
     }
 
+    @PostMapping("/projects/{projectId}/contributors/{userId}")
+    public String addCollaborator(@PathVariable int projectId, @PathVariable int userId, Model model) {
+        User user = userService.findById(userId);
+        Project project = projectService.getById(projectId);
+
+        projectService.addCollaborator(project, user);
+        return "redirect:/projects/edit/" + projectId;
+    }
 
 }

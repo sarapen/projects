@@ -21,7 +21,7 @@ public class ProjectService {
     }
 
     public List<Project> getProjectsByUser(User user) {
-        return projectRepo.findByUser(user);
+        return projectRepo.findProjectsByUserId(user.getId());
     }
 
     public void deleteById(Integer id){
@@ -30,5 +30,13 @@ public class ProjectService {
 
     public Project getById(Integer id){
         return projectRepo.getById(id);
+    }
+
+    public void addCollaborator(Project project, User user) {
+
+        if (!project.getCollaborators().contains(user)) {
+            project.getCollaborators().add(user);
+            projectRepo.save(project);
+        }
     }
 }

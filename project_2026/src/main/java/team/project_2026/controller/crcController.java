@@ -85,6 +85,8 @@ public class crcController {
         CRC crc = crcService.findById(crcId);
         model.addAttribute("crc", crc);
         model.addAttribute("linkedUseCases", linkedUseCases);
+        Project project = projectService.getById(projectId);
+        model.addAttribute("project", project);
         return "project/crcLinks";
     }
 }

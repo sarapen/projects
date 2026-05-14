@@ -69,6 +69,9 @@ public class useCaseController {
 
         model.addAttribute("useCase", useCase);
         model.addAttribute("crcCards", crcCards);
+
+        Project project = projectService.getById(projectId);
+        model.addAttribute("project", project);
         return "project/useCaseLinks";
     }
 }

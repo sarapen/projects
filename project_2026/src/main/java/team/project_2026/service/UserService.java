@@ -2,6 +2,7 @@ package team.project_2026.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,11 @@ public class UserService {
 
     @Autowired
     private useCaseRepo useCaseRepo;
+
+
+    public User findById(int id){
+        return userRepo.findById(id);
+    }
 
     public void registerUser(User user) {
         String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
@@ -51,5 +57,21 @@ public class UserService {
         userRepo.save(existingUser);
 
     }
+
+    public List<User> getAvailableCollabUsers(int projectId, String username) {
+
+        User currentUser  = userRepo.findByUsername(username)
+                .orElseThrow(() ->
+                        new RuntimeException("User not found: " + username));
+
+
+        List<User> users = userRepo.findUsersNotInProject(projectId);
+
+        return users.stream()
+                .filter(u -> u.getId() != currentUser.getId())
+                .toList();
+    }
+
+
 
 }
