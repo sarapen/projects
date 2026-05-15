@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Collaborators</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        .user-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            width: 400px;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Add Collaborators</h2>
+
+<div th:if="${#lists.isEmpty(collabUsers)}">
+    <p>No available users to add.</p>
+</div>
+
+<div th:each="user : ${collabUsers}" class="user-row">
+    <span th:text="${user.username}">Username</span>
+
+    <form th:action="@{'/projects/' + ${projectId} + '/contributors/' + ${user.id}}"
+          method="post">
+
+        <button type="submit">Add collaborator</button>
+
+    </form>
+</div>
+
+</body>
+</html>

@@ -46,6 +46,24 @@
         .add-btn {
             margin-bottom: 15px;
         }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        .comment-user {
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .comment-text {
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -56,7 +74,25 @@
 
 <div class="container">
 
-    <h1 th:text="${project.name}">Project Name</h1>
+    <div style="display:flex; align-items:center; gap:12px;">
+        <h1 style="margin:0;" th:text="${project.name}">Project Name</h1>
+
+        <a th:href="@{'/projects/' + ${project.id} + '/addContributor'}">
+            <button type="button"
+                    style="
+                    background-color:#28a745;
+                    color:white;
+                    border:none;
+                    padding:8px 12px;
+                    border-radius:6px;
+                    cursor:pointer;
+                    font-weight:500;
+                ">
+                Share Project
+            </button>
+        </a>
+    </div>
+
     <hr>
 
     <a th:href="@{'/projects/' + ${project.id} + '/diagrams'}">
@@ -86,12 +122,28 @@
 
                 <h3 th:text="${uc.name}">Use Case Name</h3>
 
-                <p><strong>Actors:</strong> <span th:text="${uc.actors}"></span></p>
-                <p><strong>Preconditions:</strong> <span th:text="${uc.preconditions}"></span></p>
-                <p><strong>Main Flow:</strong> <span th:text="${uc.mainFlow}"></span></p>
-                <p><strong>Postconditions:</strong> <span th:text="${uc.postconditions}"></span></p>
+                <p>
+                    <strong>Actors:</strong>
+                    <span th:text="${uc.actors}"></span>
+                </p>
+
+                <p>
+                    <strong>Preconditions:</strong>
+                    <span th:text="${uc.preconditions}"></span>
+                </p>
+
+                <p>
+                    <strong>Main Flow:</strong>
+                    <span th:text="${uc.mainFlow}"></span>
+                </p>
+
+                <p>
+                    <strong>Postconditions:</strong>
+                    <span th:text="${uc.postconditions}"></span>
+                </p>
 
                 <div class="card-actions">
+
                     <a th:href="@{'/project/' + ${project.id} + '/usecases/edit/' + ${uc.id}}">
                         <button>Edit</button>
                     </a>
@@ -113,6 +165,7 @@
                                th:name="${_csrf.parameterName}"
                                th:value="${_csrf.token}" />
                     </form>
+
                 </div>
 
             </div>
@@ -175,6 +228,61 @@
                 </div>
 
             </div>
+
+        </div>
+
+    </div>
+
+    <!-- ================= COMMENTS SECTION ================= -->
+
+    <hr>
+
+    <div style="padding:20px;">
+
+        <h2>Comments</h2>
+
+        <!-- ADD COMMENT -->
+        <div class="card">
+
+            <form th:action="@{'/projects/' + ${project.id} + '/comments/add'}"
+                  method="post">
+
+                <textarea name="comment"
+                          rows="4"
+                          placeholder="Write a comment..."
+                          required></textarea>
+
+                <br><br>
+
+                <button type="submit">
+                    Submit Comment
+                </button>
+
+                <input type="hidden"
+                       th:name="${_csrf.parameterName}"
+                       th:value="${_csrf.token}" />
+
+            </form>
+
+        </div>
+
+        <!-- NO COMMENTS -->
+        <div th:if="${comments == null or #lists.isEmpty(comments)}">
+            <p>No comments yet...</p>
+        </div>
+
+        <!-- COMMENTS LIST -->
+        <div th:each="c : ${comments}" class="card">
+
+            <div class="comment-user"
+                 th:text="${c.user.username}">
+                Username
+            </div>
+
+            <p class="comment-text"
+               th:text="${c.comment}">
+                Comment text
+            </p>
 
         </div>
 
