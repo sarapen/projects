@@ -27,13 +27,16 @@ public class userController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping("/dashboard")
     public String dashboard(Model model, Principal principal) {
 
         String username = principal.getName();
         User user = userService.findByUsername(username);
 
+
         model.addAttribute("projects", projectService.getProjectsByUser(user));
+
 
         return "auth/dashboard";
     }

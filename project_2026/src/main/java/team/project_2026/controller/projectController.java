@@ -11,10 +11,9 @@ import team.project_2026.model.Project;
 import team.project_2026.model.UseCase;
 import team.project_2026.model.CRC;
 import team.project_2026.model.User;
-import team.project_2026.service.ProjectService;
-import team.project_2026.service.UseCaseService;
-import team.project_2026.service.UserService;
-import team.project_2026.service.CrcService;
+import team.project_2026.model.Comment;
+import team.project_2026.service.*;
+
 import java.util.List;
 import java.security.Principal;
 
@@ -32,6 +31,9 @@ public class projectController {
 
     @Autowired
     private CrcService crcService;
+
+    @Autowired
+    private CommentService commentService;
 
 
     @PostMapping("/projects/create")
@@ -55,6 +57,10 @@ public class projectController {
 
         Project project = projectService.getById(projectId);
         model.addAttribute("project", project);
+
+        List<Comment> comments = commentService.getCommentByProject(projectId);
+        model.addAttribute("comments", comments);
+
         return "/project/project";
     }
 
