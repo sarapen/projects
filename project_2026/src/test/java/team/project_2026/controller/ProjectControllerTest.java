@@ -14,6 +14,7 @@ import team.project_2026.service.CrcService;
 import team.project_2026.service.ProjectService;
 import team.project_2026.service.UseCaseService;
 import team.project_2026.service.UserService;
+import team.project_2026.service.CommentService;
 
 import java.security.Principal;
 import java.util.List;
@@ -40,6 +41,9 @@ public class ProjectControllerTest {
 
     @Mock
     private Principal principal;
+
+    @Mock
+    private CommentService commentService;
 
     @InjectMocks
     private projectController controller;
@@ -91,6 +95,9 @@ public class ProjectControllerTest {
 
         when(projectService.getById(1))
                 .thenReturn(project);
+
+        when(commentService.getCommentByProject(1))
+                .thenReturn(List.of());
 
         String view = controller.editProject(1, model);
 

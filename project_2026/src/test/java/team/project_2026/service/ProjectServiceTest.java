@@ -10,7 +10,7 @@ import team.project_2026.model.User;
 import team.project_2026.repository.projectRepo;
 
 import java.util.List;
-
+import java.util.HashSet;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -42,19 +42,21 @@ public class ProjectServiceTest {
 
     @Test
     void testGetProjectsByUser() {
+
         User user = new User();
+        user.setId(1);
 
         Project project = new Project();
-        project.setName("Test Project");
 
-        when(projectRepo.findByUser(user))
+        when(projectRepo.findProjectsByUserId(1))
                 .thenReturn(List.of(project));
 
-        List<Project> result = projectService.getProjectsByUser(user);
+        List<Project> result =
+                projectService.getProjectsByUser(user);
 
         assertEquals(1, result.size());
-        assertEquals("Test Project", result.get(0).getName());
-        verify(projectRepo).findByUser(user);
+
+        verify(projectRepo).findProjectsByUserId(1);
     }
 
     @Test
@@ -76,5 +78,36 @@ public class ProjectServiceTest {
 
         assertEquals("Test Project", result.getName());
         verify(projectRepo).getById(1);
+    }
+
+    @Test
+    void testAddCollaborator() {
+
+        Project project = new Project();
+        User user = new User();
+
+        project.setCollaborators(new HashSet<>());
+
+        projectService.addCollaborator(project, user);
+
+        assertEquals(1, project.getCollaborators().size());
+
+        verify(projectRepo).save(project);
+    }
+
+    @Test
+    void testAddCollaborator_NoDuplicates() {
+
+        Project project = new Project();
+        User user = new User();
+
+        project.setCollaborators(new HashSet<>());
+        project.getCollaborators().add(user);
+
+        projectService.addCollaborator(project, user);
+
+        assertEquals(1, project.getCollaborators().size());
+
+        verify(projectRepo, never()).save(project);
     }
 }
